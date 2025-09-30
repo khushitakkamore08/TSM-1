@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Users,
   UserCheck,
-  Building2,
   Truck,
   BookOpen,
   Route,
@@ -15,7 +14,7 @@ import {
   Settings,
   LogOut,
 } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from "react-router-dom";   // ✅ import navigate
 
 interface SidebarProps {
   activeTab: string;
@@ -39,7 +38,7 @@ const menuItems = [
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
-  // const { signOut } = useAuth();
+  const navigate = useNavigate();   // ✅ create navigate function
 
   return (
     <div className="bg-gray-900 text-white w-64 max-h-screen overflow-scroll flex flex-col">
@@ -61,7 +60,10 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
           return (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => {
+                setActiveTab(item.id);     // highlight in sidebar
+                navigate(`/${item.id}`);   // ✅ navigate to route
+              }}
               className={`w-full flex items-center space-x-3 px-3 py-3 rounded-lg text-left transition-colors ${
                 activeTab === item.id
                   ? 'bg-blue-600 text-white'
@@ -77,7 +79,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
 
       <div className="p-4 border-t border-gray-800">
         <button
-          // onClick={signOut}
           className="w-full flex items-center space-x-3 px-3 py-3 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white transition-colors"
         >
           <LogOut className="w-5 h-5" />
